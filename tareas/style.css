@@ -1,0 +1,206 @@
+body {
+    background-color: #f8f9fa;
+    padding: 20px 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.container-main {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 30px 0;
+    margin-bottom: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.header h1 {
+    margin: 0;
+    font-weight: bold;
+    font-size: 2.5rem;
+}
+
+.header p {
+    font-size: 1.1rem;
+    margin-top: 10px;
+    opacity: 0.95;
+}
+
+.btn-add-task {
+    margin-bottom: 20px;
+}
+
+.btn-add-task .btn {
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-add-task .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.table-container {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.table {
+    margin-bottom: 0;
+}
+
+.table thead {
+    background-color: #f8f9fa;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.table thead th {
+    font-weight: 600;
+    color: #495057;
+    padding: 15px;
+    vertical-align: middle;
+}
+
+.table tbody td {
+    padding: 15px;
+    vertical-align: middle;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.table tbody tr:hover {
+    background-color: #f8f9fa;
+    transition: background-color 0.2s ease;
+}
+
+.task-id {
+    font-weight: 600;
+    color: #667eea;
+    width: 60px;
+}
+
+.task-description {
+    color: #495057;
+    word-wrap: break-word;
+}
+
+.task-actions {
+    width: 150px;
+    text-align: center;
+}
+
+.btn-sm {
+    margin: 0 2px;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.btn-edit {
+    background-color: #0dcaf0;
+    border-color: #0dcaf0;
+    color: white;
+    transition: all 0.2s ease;
+}
+
+.btn-edit:hover {
+    background-color: #0bb5d9;
+    border-color: #0bb5d9;
+    transform: scale(1.05);
+}
+
+.btn-delete {
+    background-color: #dc3545;
+    border-color: #dc3545;
+    color: white;
+    transition: all 0.2s ease;
+}
+
+.btn-delete:hover {
+    background-color: #c82333;
+    border-color: #c82333;
+    transform: scale(1.05);
+}
+
+.empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: #6c757d;
+}
+
+.empty-state p {
+    margin: 0;
+    font-size: 18px;
+}
+
+.modal-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.modal-title {
+    font-weight: 600;
+    color: #495057;
+}
+
+.form-label {
+    font-weight: 500;
+    color: #495057;
+    margin-bottom: 8px;
+}
+
+.form-control {
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    padding: 10px 12px;
+    font-size: 1rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-control:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+}
+
+.form-control::placeholder {
+    color: #adb5bd;
+}
+
+@media (max-width: 576px) {
+    .header h1 {
+        font-size: 1.8rem;
+    }
+
+    .header p {
+        font-size: 0.95rem;
+    }
+
+    .table-container {
+        padding: 15px;
+    }
+
+    .table thead th,
+    .table tbody td {
+        padding: 10px;
+        font-size: 0.9rem;
+    }
+
+    .task-actions {
+        width: auto;
+    }
+
+    .btn-sm {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.75rem;
+    }
+
+    .btn-add-task .btn {
+        font-size: 0.95rem;
+    }
+}
