@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Customer Management Dashboard</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#3b82f6",
+                        "background-light": "#f9fafb",
+                        "background-dark": "#111827",
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.5rem",
+                    },
+                },
+            },
+        };
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark min-h-screen text-slate-900 dark:text-slate-100 transition-colors duration-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="flex items-center justify-between mb-8">
+            <h1 class="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">Clientes</h1>
+            <div class="flex items-center space-x-2">
+                <button
+                    class="p-2 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
+                    onclick="document.documentElement.classList.toggle('dark')">
+                    <span class="material-icons text-xl align-middle leading-none dark:hidden">dark_mode</span>
+                    <span class="material-icons text-xl align-middle leading-none hidden dark:inline">light_mode</span>
+                </button>
+                <button
+                    class="material-icons p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300">more_horiz</button>
+            </div>
+        </div>
+        <div
+            class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-6 mb-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-4 items-end">
+                <div class="space-y-1">
+                    <label
+                        class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Nombre</label>
+                    <input
+                        id="inputNombre"
+                        class="w-full rounded-lg border-slate-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white focus:ring-primary focus:border-primary"
+                        placeholder="Ej. Juan" type="text" />
+                </div>
+                <div class="space-y-1">
+                    <label
+                        class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Apellidos</label>
+                    <input
+                        id="inputApellidos"
+                        class="w-full rounded-lg border-slate-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white focus:ring-primary focus:border-primary"
+                        placeholder="Ej. Pérez" type="text" />
+                </div>
+                <div class="space-y-1">
+                    <label
+                        class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Correo
+                        Electrónico</label>
+                    <input 
+                        id="inputEmail"
+                        class="w-full rounded-lg border-slate-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white focus:ring-primary focus:border-primary"
+                        placeholder="email@ejemplo.com" type="email" />
+                </div>
+                <div class="space-y-1">
+                    <label
+                        class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Teléfono</label>
+                    <input
+                        id="inputTelefono"
+                        class="w-full rounded-lg border-slate-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white focus:ring-primary focus:border-primary"
+                        placeholder="600 000 000" type="tel" />
+                </div>
+                <div class="md:col-span-4 lg:col-span-1">
+                    <button id="btnAñadir"
+                        class="w-full bg-slate-200 hover:bg-slate-300 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-800 dark:text-slate-100 font-semibold py-2.5 px-4 rounded-lg transition-colors flex items-center justify-center gap-2">
+                        <span class="material-icons text-lg">person_add</span>
+                        Añadir Cliente
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div
+            class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse" id="listaClientes">
+                    <thead>
+                        <tr class="bg-slate-800 dark:bg-slate-900 text-white">
+                            <th class="px-6 py-4 font-semibold text-sm uppercase tracking-wider">Nombre</th>
+                            <th
+                                class="px-6 py-4 font-semibold text-sm uppercase tracking-wider border-l border-slate-700">
+                                Apellidos</th>
+                            <th
+                                class="px-6 py-4 font-semibold text-sm uppercase tracking-wider border-l border-slate-700">
+                                Email</th>
+                            <th
+                                class="px-6 py-4 font-semibold text-sm uppercase tracking-wider border-l border-slate-700">
+                                Teléfono</th>
+                            <th
+                                class="px-6 py-4 font-semibold text-sm uppercase tracking-wider border-l border-slate-700">
+                                Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-200 dark:divide-slate-700">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script src="./script.js"></script>
+</body>
+
+</html>
