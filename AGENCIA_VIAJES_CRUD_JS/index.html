@@ -121,7 +121,6 @@
         </div>
         <div class="flex items-center justify-between mb-8" style="margin-top: 5%;">
             <h1 class="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">Viajes</h1>
-
         </div>
         <div
             class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-6 mb-8">
@@ -148,10 +147,10 @@
                         placeholder="200" type="number" />
                 </div>
                 <div class="space-y-1.5">
-                    <label class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Tipo
+                    <label
+                        class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Tipo
                         de Viaje</label>
-                    <select
-                        id="tipo"
+                    <select id="tipo"
                         class="w-full rounded-lg border-slate-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white focus:ring-primary focus:border-primary">
                         <option value="Paquete">Paquete</option>
                         <option value="Individual">Individual</option>
@@ -192,6 +191,50 @@
                 </table>
             </div>
         </div>
+        <div class="flex items-center justify-between mb-8" style="margin-top: 5%;">
+            <h1 class="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">Reservas</h1>
+        </div>
+        <div style="margin-top: 3%;"
+            class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-6 mb-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-4 items-end">
+                <div class="space-y-1.5">
+                    <label
+                        class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Cliente</label>
+                    <select id="selectCliente"
+                        class="w-full rounded-lg border-slate-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white focus:ring-primary focus:border-primary">
+                        <option value="">Selecciona un Cliente</option>
+                    </select>
+                </div>
+                <div class="space-y-1.5">
+                    <label
+                        class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Viaje</label>
+                    <select id="selectViaje"
+                        class="w-full rounded-lg border-slate-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white focus:ring-primary focus:border-primary">
+                        <option value="">Selecciona un Viaje</option>
+                    </select>
+                </div>
+                <button id="btnCrearReserva" style="width: 200%;"
+                    class="w-full bg-slate-200 hover:bg-slate-300 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-800 dark:text-slate-100 font-semibold py-2.5 px-4 rounded-lg transition-colors flex items-center justify-center gap-2">
+                    <span class="material-icons text-lg">person_add</span>
+                    Hacer Reserva
+                </button>
+            </div>
+        </div>
+        <table class="w-full text-left border-collapse" id="listaReservas">
+            <thead>
+                <tr class="bg-slate-800 dark:bg-slate-900 text-white">
+                    <th class="px-6 py-4 font-semibold text-sm uppercase tracking-wider">Cliente</th>
+                    <th class="px-6 py-4 font-semibold text-sm uppercase tracking-wider border-l border-slate-700">
+                        Viaje</th>
+                    <th class="px-6 py-4 font-semibold text-sm uppercase tracking-wider border-l border-slate-700">
+                        Fecha</th>
+                    <th class="px-6 py-4 font-semibold text-sm uppercase tracking-wider border-l border-slate-700">
+                        Acciones</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-200 dark:divide-slate-700">
+            </tbody>
+        </table>
     </div>
     <script src="./script.js"></script>
 </body>
