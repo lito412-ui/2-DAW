@@ -10,39 +10,6 @@ class Viaje{
     }
 }
 
-class Vuelo extends Viaje{
-    constructor(codigo, destino, precio, aerolinea, duracion) {
-    super(codigo, destino, precio);
-    this.aerolinea = aerolinea;
-    this.duracion = duracion;
-    }
-    getInfo() {
-    return `${super.getInfo()}, Aerolínea: ${this.aerolinea}, Duración: ${this.duracion} horas`;
-    }
-}
-
-class Hotel extends Viaje{
-    constructor(codigo, destino, precio, estrellas, tipoHabitacion) {
-    super(codigo, destino, precio);
-    this.estrellas = estrellas;
-    this.tipoHabitacion = tipoHabitacion;
-    }
-    getInfo() {
-    return `${super.getInfo()}, Hotel ${this.estrellas} estrellas, Habitación: ${this.tipoHabitacion}`;
-    }
-}
-
-class Paquete extends Viaje{
-    constructor(codigo, destino, precio, vuelo, hotel) {
-    super(codigo, destino, precio);
-    this.vuelo = vuelo;
-    this.hotel = hotel;
-    }
-    getInfo() {
-    return `${super.getInfo()}\n - Vuelo: ${this.vuelo.getInfo()}\n - Hotel: ${this.hotel.getInfo()}`;
-    }
-}
-
 class Cliente{
     constructor(nombre, apellido, email, telefono) {
     this.nombre = nombre;
@@ -64,19 +31,27 @@ class Reserva{
     return `${this.cliente.getResumen()}\nReservó: ${this.viaje.getInfo()}`;
     }
 }
-
-const btnAnadir = document.getElementById('btnAñadir');
+//Clientes
+const btnAñadirCliente = document.getElementById('btnAñadirCliente');
 const tablaClientes = document.getElementById('listaClientes');
 const inputNombre = document.getElementById('inputNombre');
 const inputApellidos = document.getElementById('inputApellidos');
 const inputEmail = document.getElementById('inputEmail');
 const inputTelefono = document.getElementById('inputTelefono');
 
-function agregarFila(cliente) {
-    const fila = document.createElement('tr');
-    fila.className = "hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors";
+//Viajes
+const btnAñadirViaje = document.getElementById('btnAñadirViaje');
+const tablaViaje = document.getElementById('listaViajes');
+const inputCodigo = document.getElementById('codigo');
+const inputDestino = document.getElementById('destino');
+const inputPrecio = document.getElementById('precio');
+const inputTipoViaje = document.getElementById('tipo');
+
+function agregarFilaCliente(cliente) {
+    const filaCliente = document.createElement('tr');
+    filaCliente.className = "hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors";
     
-    fila.innerHTML = `
+    filaCliente.innerHTML = `
         <td class="px-6 py-4 text-slate-700 dark:text-slate-300">${cliente.nombre}</td>
         <td class="px-6 py-4 text-slate-700 dark:text-slate-300 border-l border-slate-100 dark:border-slate-700">${cliente.apellido}</td>
         <td class="px-6 py-4 text-slate-700 dark:text-slate-300 border-l border-slate-100 dark:border-slate-700">${cliente.email}</td>
@@ -89,14 +64,35 @@ function agregarFila(cliente) {
         </td>
     `;
 
-    fila.querySelector('.btn-eliminar').addEventListener('click', () => {
-        fila.remove();
+    filaCliente.querySelector('.btn-eliminar').addEventListener('click', () => {
+        filaCliente.remove();
     });
 
-    tablaClientes.appendChild(fila);
+    tablaClientes.appendChild(filaCliente);
+}
+function agregarViaje(viaje){
+    const filaViaje = document.createElement('tr');
+    filaViaje.className = "hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors";
+
+    filaViaje.innerHTML = `<td class="px-6 py-4 text-slate-700 dark:text-slate-300">${viaje.codigo}</td>
+        <td class="px-6 py-4 text-slate-700 dark:text-slate-300 border-l border-slate-100 dark:border-slate-700">${viaje.destino}</td>
+        <td class="px-6 py-4 text-slate-700 dark:text-slate-300 border-l border-slate-100 dark:border-slate-700">${viaje.precio}</td>
+        <td class="px-6 py-4 text-slate-700 dark:text-slate-300 border-l border-slate-100 dark:border-slate-700">${viaje.disponibilidad}</td>
+        <td class="px-6 py-4 border-l border-slate-100 dark:border-slate-700">
+            <button class="btn-eliminar inline-flex items-center px-3 py-1 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded text-xs font-medium text-slate-600 dark:text-slate-300 hover:bg-red-50 hover:text-red-600 hover:border-red-200 dark:hover:bg-red-900/20 dark:hover:text-red-400 dark:hover:border-red-800 transition-all">
+                <span class="material-icons text-sm mr-1">delete</span>
+                Eliminar
+            </button>
+        </td>`;
+    
+    filaViaje.querySelector('.btn-eliminar').addEventListener('click', () =>{
+        filaViaje.remove();
+    });
+
+    tablaViaje.appendChild(filaViaje);
 }
 
-btnAnadir.addEventListener('click', () => {
+btnAñadirCliente.addEventListener('click', () => {
     const nombre = inputNombre.value;
     const apellido = inputApellidos.value;
     const email = inputEmail.value;
@@ -109,10 +105,25 @@ btnAnadir.addEventListener('click', () => {
 
     const nuevoCliente = new Cliente(nombre, apellido, email, telefono);
 
-    agregarFila(nuevoCliente);
+    agregarFilaCliente(nuevoCliente);
 
     inputNombre.value = '';
     inputApellidos.value = '';
     inputEmail.value = '';
     inputTelefono.value = '';
+});
+
+btnAñadirViaje.addEventListener('click',() => {
+    const codigo = inputCodigo.value;
+    const destino = inputDestino.value;
+    const precio = inputPrecio.value;
+    const tipo = inputTipoViaje.value;
+
+    if(!codigo || !destino || !precio || !tipo){
+        alert("Por favor, rellena los campos obligatorios");
+    }
+    const nuevoViaje = new Viaje(codigo, destino, precio, tipo);
+
+    agregarViaje(nuevoViaje);
+    
 });
