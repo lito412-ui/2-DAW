@@ -6,9 +6,14 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>Customer Management Dashboard</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap"
-        rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link rel="stylesheet" href="./style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=confirmation_number,delete,person_add,travel" />
+
+
     <script>
         tailwind.config = {
             darkMode: "class",
@@ -29,11 +34,6 @@
             },
         };
     </script>
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-    </style>
 </head>
 
 <body
@@ -42,14 +42,6 @@
         <div class="flex items-center justify-between mb-8">
             <h1 class="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">Clientes</h1>
             <div class="flex items-center space-x-2">
-                <button
-                    class="p-2 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
-                    onclick="document.documentElement.classList.toggle('dark')">
-                    <span class="material-icons text-xl align-middle leading-none dark:hidden">dark_mode</span>
-                    <span class="material-icons text-xl align-middle leading-none hidden dark:inline">light_mode</span>
-                </button>
-                <button
-                    class="material-icons p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300">more_horiz</button>
             </div>
         </div>
         <div
@@ -58,14 +50,14 @@
                 <div class="space-y-1">
                     <label
                         class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Nombre</label>
-                    <input id="inputNombre"
+                    <input id="inputNombre" minlength="2" maxlength="20"
                         class="w-full rounded-lg border-slate-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white focus:ring-primary focus:border-primary"
                         placeholder="Ej. Juan" type="text" />
                 </div>
                 <div class="space-y-1">
                     <label
                         class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Apellidos</label>
-                    <input id="inputApellidos"
+                    <input id="inputApellidos" minlength="2" maxlength="20"
                         class="w-full rounded-lg border-slate-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white focus:ring-primary focus:border-primary"
                         placeholder="Ej. Pérez" type="text" />
                 </div>
@@ -73,21 +65,21 @@
                     <label
                         class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Correo
                         Electrónico</label>
-                    <input id="inputEmail"
+                    <input id="inputEmail" maxlength="30"
                         class="w-full rounded-lg border-slate-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white focus:ring-primary focus:border-primary"
                         placeholder="email@ejemplo.com" type="email" />
                 </div>
                 <div class="space-y-1">
                     <label
                         class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Teléfono</label>
-                    <input id="inputTelefono"
+                    <input id="inputTelefono" minlength="9" maxlength="9"
                         class="w-full rounded-lg border-slate-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white focus:ring-primary focus:border-primary"
                         placeholder="600 000 000" type="tel" />
                 </div>
                 <div class="md:col-span-4 lg:col-span-1">
                     <button id="btnAñadirCliente"
                         class="w-full bg-slate-200 hover:bg-slate-300 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-800 dark:text-slate-100 font-semibold py-2.5 px-4 rounded-lg transition-colors flex items-center justify-center gap-2">
-                        <span class="material-icons text-lg">person_add</span>
+                        <span class="material-symbols-outlined">person_add</span>
                         Añadir Cliente
                     </button>
                 </div>
@@ -128,21 +120,21 @@
                 <div class="space-y-1">
                     <label
                         class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Código</label>
-                    <input id="codigo"
+                    <input id="codigo" min="000" max="999"
                         class="w-full rounded-lg border-slate-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white focus:ring-primary focus:border-primary"
-                        placeholder="222" type="text" />
+                        placeholder="222" type="number" />
                 </div>
                 <div class="space-y-1">
                     <label
                         class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Destino</label>
-                    <input id="destino"
+                    <input id="destino" maxlength="50" minlength="3"
                         class="w-full rounded-lg border-slate-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white focus:ring-primary focus:border-primary"
                         placeholder="Aruba" type="text" />
                 </div>
                 <div class="space-y-1">
                     <label
                         class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Precio</label>
-                    <input id="precio"
+                    <input id="precio" min="0" max="40000"
                         class="w-full rounded-lg border-slate-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white focus:ring-primary focus:border-primary"
                         placeholder="200" type="number" />
                 </div>
@@ -159,7 +151,9 @@
                 <div class="md:col-span-4 lg:col-span-1">
                     <button id="btnAñadirViaje"
                         class="w-full bg-slate-200 hover:bg-slate-300 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-800 dark:text-slate-100 font-semibold py-2.5 px-4 rounded-lg transition-colors flex items-center justify-center gap-2">
-                        <span class="material-icons text-lg">person_add</span>
+                        <span class="material-symbols-outlined">
+                            travel
+                        </span>
                         Añadir Viaje
                     </button>
                 </div>
@@ -215,7 +209,9 @@
                 </div>
                 <button id="btnCrearReserva" style="width: 200%;"
                     class="w-full bg-slate-200 hover:bg-slate-300 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-800 dark:text-slate-100 font-semibold py-2.5 px-4 rounded-lg transition-colors flex items-center justify-center gap-2">
-                    <span class="material-icons text-lg">person_add</span>
+                    <span class="material-symbols-outlined">
+                        confirmation_number
+                    </span>
                     Hacer Reserva
                 </button>
             </div>

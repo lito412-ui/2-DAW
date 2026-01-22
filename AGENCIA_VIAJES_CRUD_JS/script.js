@@ -46,15 +46,15 @@ const inputCodigo = document.getElementById('codigo');
 const inputDestino = document.getElementById('destino');
 const inputPrecio = document.getElementById('precio');
 const inputTipoViaje = document.getElementById('tipo');
-
 //Reservas
 const selectClientes = document.getElementById('selectCliente');
 const selectViajes = document.getElementById('selectViaje');
 const btnCrearReservas = document.getElementById('btnCrearReserva');
 const tablaReservas = document.getElementById('listaReservas').querySelector('tbody');
 //Datos a guardar
-let clientesRegistrados = [];
-let viajesRegistrados = [];
+let clientesRegistrados = JSON.parse(localStorage.getItem('clientes')) || [];
+let viajesRegistrados = JSON.parse(localStorage.getItem('viajes')) || [];
+let reservasRegistradas = JSON.parse(localStorage.getItem('reservas')) || [];
 //Hora
 const ahora = new Date();
 const año = ahora.getFullYear();
@@ -62,6 +62,17 @@ const mes = ahora.getMonth() + 1;
 const dia = ahora.getDate();
 const hora = ahora.getHours();
 const minutos = ahora.getMinutes();
+
+
+clientesRegistrados = clientesRegistrados.map(c => new Cliente(c.nombre, c.apellido, c.email, c.telefono));
+viajesRegistrados = viajesRegistrados.map(v => new Viaje(v.codigo, v.destino, v.precio, v.disponibilidad));
+reservasRegistradas = reservasRegistradas.map(r => new Reserva(r.cliente.nombre,r.viaje.destino,fechaLocal));
+//Cargar datos localStorage
+document.addEventListener('DOMContentLoaded', () => {
+    clientesRegistrados.forEach(c => agregarFilaCliente(c));
+    viajesRegistrados.forEach(v => agregarViaje(v));
+    actualizarSelect();
+});
 
 function agregarFilaCliente(cliente) {
     const filaCliente = document.createElement('tr');
@@ -74,14 +85,24 @@ function agregarFilaCliente(cliente) {
         <td class="px-6 py-4 text-slate-700 dark:text-slate-300 border-l border-slate-100 dark:border-slate-700">${cliente.telefono}</td>
         <td class="px-6 py-4 border-l border-slate-100 dark:border-slate-700">
             <button class="btn-eliminar inline-flex items-center px-3 py-1 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded text-xs font-medium text-slate-600 dark:text-slate-300 hover:bg-red-50 hover:text-red-600 hover:border-red-200 dark:hover:bg-red-900/20 dark:hover:text-red-400 dark:hover:border-red-800 transition-all">
-                <span class="material-icons text-sm mr-1">delete</span>
+                <span class="material-symbols-outlined">
+                        delete
+                </span>
                 Eliminar
             </button>
         </td>
     `;
 
     filaCliente.querySelector('.btn-eliminar').addEventListener('click', () => {
+        const tieneReserva = reservasRegistradas.some(r => r.cliente === cliente);
+        if (tieneReserva) {
+            alert(`No puedes eliminar a ${cliente.nombre}, primero debes cancelar su reserva`);
+            return;
+        }
+        clientesRegistrados = clientesRegistrados.filter(c => c !== cliente);
+        localStorage.setItem('clientes', JSON.stringify(clientesRegistrados));
         filaCliente.remove();
+        actualizarSelect();
     });
 
     tablaClientes.appendChild(filaCliente);
@@ -96,16 +117,24 @@ function agregarViaje(viaje) {
         <td class="px-6 py-4 text-slate-700 dark:text-slate-300 border-l border-slate-100 dark:border-slate-700">${viaje.disponibilidad}</td>
         <td class="px-6 py-4 border-l border-slate-100 dark:border-slate-700">
             <button class="btn-eliminar inline-flex items-center px-3 py-1 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded text-xs font-medium text-slate-600 dark:text-slate-300 hover:bg-red-50 hover:text-red-600 hover:border-red-200 dark:hover:bg-red-900/20 dark:hover:text-red-400 dark:hover:border-red-800 transition-all">
-                <span class="material-icons text-sm mr-1">delete</span>
+                <span class="material-symbols-outlined">delete</span>
                 Eliminar
             </button>
         </td>`;
 
     filaViaje.querySelector('.btn-eliminar').addEventListener('click', () => {
+        const tieneReserva = reservasRegistradas.some(r => r.viaje === viaje);
+        if (tieneReserva) {
+            alert(`No puedes eliminar el viaje a ${viaje.destino}. Hay reservas asociadas.`);
+            return;
+        }
+        viajesRegistrados = viajesRegistrados.filter(v => v !== viaje);
+        localStorage.setItem('viajes', JSON.stringify(viajesRegistrados));
         filaViaje.remove();
+        actualizarSelect();
     });
-
     tablaViaje.appendChild(filaViaje);
+
 }
 function actualizarSelect() {
     selectClientes.innerHTML = `<option>Elige un Cliente</option>`;
@@ -140,12 +169,19 @@ function añadirReserva(reserva) {
         </td>
         <td class="px-6 py-4 border-l border-slate-100 dark:border-slate-700">
             <button class="btn-eliminar inline-flex items-center px-3 py-1 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded text-xs font-medium text-slate-600 dark:text-slate-300 hover:bg-red-50 hover:text-red-600 transition-all">
-                <span class="material-icons text-sm mr-1">delete</span>
-                Eliminar
+                <span class="material-symbols-outlined">delete</span>
+                Cancelar
             </button>
         </td>`;
 
+    reservasRegistradas.push(reserva);
     tablaReservas.appendChild(filaReserva);
+
+    filaReserva.querySelector('.btn-cancelar').addEventListener('click', () => {
+        reservasRegistradas = reservasRegistradas.filter(r => r !== reserva);
+        localStorage.setItem('reservas', JSON.stringify(reservasRegistradas));
+        filaReserva.remove();
+    });
 };
 
 btnAñadirCliente.addEventListener('click', () => {
@@ -154,15 +190,15 @@ btnAñadirCliente.addEventListener('click', () => {
     const email = inputEmail.value;
     const telefono = inputTelefono.value;
 
-    if (!nombre || !apellido || !email) {
-        alert("Por favor, rellena los campos obligatorios");
-        return;
+    if (nombre && apellido && email) {
+        const nuevoCliente = new Cliente(nombre, apellido, email, telefono);
+        clientesRegistrados.push(nuevoCliente);
+        localStorage.setItem('clientes', JSON.stringify(clientesRegistrados));
+        agregarFilaCliente(nuevoCliente);
+        actualizarSelect();
+    } else {
+        alert("Por favor rellena los campos")
     }
-
-    const nuevoCliente = new Cliente(nombre, apellido, email, telefono);
-    clientesRegistrados.push(nuevoCliente);
-    actualizarSelect();
-    agregarFilaCliente(nuevoCliente);
 
     inputNombre.value = '';
     inputApellidos.value = '';
@@ -176,13 +212,16 @@ btnAñadirViaje.addEventListener('click', () => {
     const precio = inputPrecio.value;
     const tipo = inputTipoViaje.value;
 
-    if (!codigo || !destino || !precio || !tipo) {
+    if (codigo && destino && precio && tipo) {
+        const nuevoViaje = new Viaje(codigo, destino, precio, tipo);
+        viajesRegistrados.push(nuevoViaje);
+        localStorage.setItem('viajes',JSON.stringify(viajesRegistrados));
+        actualizarSelect();
+        agregarViaje(nuevoViaje);
+    }else{
         alert("Por favor, rellena los campos obligatorios");
     }
-    const nuevoViaje = new Viaje(codigo, destino, precio, tipo);
-    viajesRegistrados.push(nuevoViaje);
-    actualizarSelect();
-    agregarViaje(nuevoViaje);
+    
 
 });
 btnCrearReservas.addEventListener('click', () => {
@@ -197,5 +236,6 @@ btnCrearReservas.addEventListener('click', () => {
     const clienteObjeto = clientesRegistrados[cliente];
     const viajeObjeto = viajesRegistrados[viaje];
     const nuevaReserva = new Reserva(clienteObjeto, viajeObjeto);
+    localStorage.setItem('reservas',JSON.stringify(reservasRegistradas));
     añadirReserva(nuevaReserva);
 });
