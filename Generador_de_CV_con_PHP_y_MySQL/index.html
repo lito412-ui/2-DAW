@@ -11,6 +11,8 @@
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
         rel="stylesheet" />
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script href="./script.js"></script>
     <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
@@ -44,6 +46,12 @@
         }
         .resume-preview-container {
             aspect-ratio: 1 / 1.414;}
+        @media print {
+            body > * { display: none !important; }
+            #modal-cv { display: block !important; position: absolute; left: 0; top: 0; background: white; }
+            #modal-cv .p-4, #modal-cv button { display: none !important; } /*Oculta header*/
+            #cv-clonado { box-shadow: none !important; margin: 0; width: 100%; }
+        }
     </style>
 </head>
 
@@ -120,72 +128,76 @@
                         <p class="text-slate-500 dark:text-slate-400 text-base">Empieza con un contacto básico para que
                             puedan contactar contigo fácilmente</p>
                     </div>
-                    <div
-                        class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 p-8 space-y-8 transition-colors">
-                        <div class="grid grid-cols-2 gap-6">
+                    <form name="CV" action="./guardar.php" method="POST">
+                        <div
+                            class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 p-8 space-y-8 transition-colors">
+                            <div class="grid grid-cols-2 gap-6">
+                                <label class="flex flex-col">
+                                    <span
+                                        class="text-slate-700 dark:text-slate-300 text-sm font-semibold mb-2">Nombre</span>
+                                    <input
+                                        class="rounded-lg border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:border-primary focus:ring-1 focus:ring-primary h-12 px-4 transition-all"
+                                        placeholder="Álvaro" type="text" id="in-nombre" />
+                                </label>
+                                <label class="flex flex-col">
+                                    <span
+                                        class="text-slate-700 dark:text-slate-300 text-sm font-semibold mb-2">Apellidos</span>
+                                    <input
+                                        class="rounded-lg border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:border-primary focus:ring-1 focus:ring-primary h-12 px-4 transition-all"
+                                        placeholder="Gutiérrez Elena" type="text" id="in-apellido" />
+                                </label>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <label class="flex flex-col">
+                                    <span class="text-slate-700 dark:text-slate-300 text-sm font-semibold mb-2">Correo
+                                        Electrónico</span>
+                                    <input
+                                        class="rounded-lg border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:border-primary focus:ring-1 focus:ring-primary h-12 px-4 transition-all"
+                                        placeholder="ejemplo@gmail.com" type="email" id="in-email" />
+                                </label>
+                                <label class="flex flex-col">
+                                    <span class="text-slate-700 dark:text-slate-300 text-sm font-semibold mb-2">Numero
+                                        Teléfono</span>
+                                    <input
+                                        class="rounded-lg border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:border-primary focus:ring-1 focus:ring-primary h-12 px-4 transition-all"
+                                        placeholder="+34 000-000-000" type="tel" id="in-tel" />
+                                </label>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <label class="flex flex-col">
+                                    <span class="text-slate-700 dark:text-slate-300 text-sm font-semibold mb-2">Titulo
+                                        Profesional</span>
+                                    <input
+                                        class="rounded-lg border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:border-primary focus:ring-1 focus:ring-primary h-12 px-4 transition-all"
+                                        placeholder="Ingeniero informatico" type="text" id="in-titulo" />
+                                </label>
+                                <label class="flex flex-col">
+                                    <span
+                                        class="text-slate-700 dark:text-slate-300 text-sm font-semibold mb-2">Portafolio
+                                        linkedin</span>
+                                    <input
+                                        class="rounded-lg border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:border-primary focus:ring-1 focus:ring-primary h-12 px-4 transition-all"
+                                        placeholder="linkedin.com/in/username" type="text" id="in-linkedin" />
+                                </label>
+                            </div>
                             <label class="flex flex-col">
                                 <span
-                                    class="text-slate-700 dark:text-slate-300 text-sm font-semibold mb-2">Nombre</span>
-                                <input
-                                    class="rounded-lg border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:border-primary focus:ring-1 focus:ring-primary h-12 px-4 transition-all"
-                                    placeholder="Álvaro" type="text" id="in-nombre" />
-                            </label>
-                            <label class="flex flex-col">
-                                <span
-                                    class="text-slate-700 dark:text-slate-300 text-sm font-semibold mb-2">Apellidos</span>
-                                <input
-                                    class="rounded-lg border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:border-primary focus:ring-1 focus:ring-primary h-12 px-4 transition-all"
-                                    placeholder="Gutiérrez Elena" type="text" id="in-apellido" />
+                                    class="text-slate-700 dark:text-slate-300 text-sm font-semibold mb-2">Experiencia</span>
+                                <textarea
+                                    class="rounded-lg border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:border-primary focus:ring-1 focus:ring-primary p-4 transition-all"
+                                    placeholder="Describe tu carrera profesional..." rows="4"
+                                    id="in-experiencia"></textarea>
                             </label>
                         </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <label class="flex flex-col">
-                                <span class="text-slate-700 dark:text-slate-300 text-sm font-semibold mb-2">Correo
-                                    Electrónico</span>
-                                <input
-                                    class="rounded-lg border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:border-primary focus:ring-1 focus:ring-primary h-12 px-4 transition-all"
-                                    placeholder="ejemplo@gmail.com" type="email" id="in-email" />
-                            </label>
-                            <label class="flex flex-col">
-                                <span class="text-slate-700 dark:text-slate-300 text-sm font-semibold mb-2">Numero
-                                    Teléfono</span>
-                                <input
-                                    class="rounded-lg border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:border-primary focus:ring-1 focus:ring-primary h-12 px-4 transition-all"
-                                    placeholder="+36 000-000-000" type="tel" id="in-tel" />
-                            </label>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <label class="flex flex-col">
-                                <span class="text-slate-700 dark:text-slate-300 text-sm font-semibold mb-2">Titulo
-                                    Profesional</span>
-                                <input
-                                    class="rounded-lg border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:border-primary focus:ring-1 focus:ring-primary h-12 px-4 transition-all"
-                                    placeholder="Ingeniero informatico" type="text" id="in-titulo" />
-                            </label>
-                            <label class="flex flex-col">
-                                <span class="text-slate-700 dark:text-slate-300 text-sm font-semibold mb-2">Portafolio
-                                    linkedin</span>
-                                <input
-                                    class="rounded-lg border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:border-primary focus:ring-1 focus:ring-primary h-12 px-4 transition-all"
-                                    placeholder="linkedin.com/in/username" type="text" id="in-linkedin" />
-                            </label>
-                        </div>
-                        <label class="flex flex-col">
-                            <span
-                                class="text-slate-700 dark:text-slate-300 text-sm font-semibold mb-2">Experiencia</span>
-                            <textarea
-                                class="rounded-lg border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:border-primary focus:ring-1 focus:ring-primary p-4 transition-all"
-                                placeholder="Describe tu carrera profesional..." rows="4"
-                                id="in-experiencia"></textarea>
-                        </label>
-                    </div>
+                    </form>
                     <div class="mt-8 flex justify-between items-center">
                         <button
                             class="px-6 py-3 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 font-bold hover:bg-slate-100 dark:hover:bg-slate-800 transition-all flex items-center gap-2"
                             style="visibility: hidden;">
                         </button>
                         <button
-                            class="px-8 py-3 rounded-xl bg-primary text-white font-bold shadow-lg hover:opacity-95 transition-all flex items-center gap-2">
+                            class="px-8 py-3 rounded-xl bg-primary text-white font-bold shadow-lg hover:opacity-95 transition-all flex items-center gap-2"
+                            id="guardar">
                             Guardar
                             <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
                         </button>
@@ -197,12 +209,6 @@
                 <div class="flex items-center justify-between w-full mb-6">
                     <h3 class="text-xs font-black uppercase tracking-widest text-slate-400 dark:text-slate-500">Vista CV
                     </h3>
-                    <div class="flex gap-2">
-                        <button
-                            class="size-8 flex items-center justify-center rounded-lg bg-white dark:bg-slate-900 shadow-sm border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400">
-                            <span class="material-symbols-outlined text-[18px]">zoom_in</span>
-                        </button>
-                    </div>
                 </div>
                 <div
                     class="w-full h-full overflow-hidden bg-white shadow-2xl rounded-sm resume-preview-container origin-top transform scale-100 border border-slate-200">
@@ -223,7 +229,8 @@
                         </div>
                         <div class="mb-4">
                             <h2 class="text-[10px] uppercase font-bold text-slate-400 mb-2">Perfil/Experiencia</h2>
-                            <p class="text-slate-700 leading-relaxed text-[9px]" id="out-experiencia">Descripción de tu vida profesional</p>
+                            <p class="text-slate-700 leading-relaxed text-[9px]" id="out-experiencia">Descripción de tu
+                                vida profesional</p>
                         </div>
                         <div>
                             <h2 class="text-[10px] uppercase font-bold text-slate-400 mb-2">Tecnologías</h2>
@@ -238,7 +245,36 @@
             </aside>
         </main>
     </div>
-<script src="./script.js"></script>
+    <div id="modal-cv"
+        class="fixed inset-0 z-[60] hidden flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-sm">
+        <div
+            class="bg-white dark:bg-slate-900 w-full max-w-5xl max-h-[90vh] rounded-2xl shadow-2xl flex flex-col overflow-hidden border border-slate-200 dark:border-slate-800">
+            <div
+                class="p-4 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center bg-white dark:bg-slate-900">
+                <h3 class="font-bold text-slate-900 dark:text-white">Vista Previa Final</h3>
+                <button onclick="cerrarModal()"
+                    class="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors text-slate-500">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+
+            <div class="flex-1 overflow-y-auto p-8 bg-slate-200 dark:bg-slate-950 flex justify-center">
+                <div id="cv-clonado"
+                    class="bg-white w-[210mm] min-h-[297mm] p-[15mm] shadow-xl text-slate-900 shadow-black/20">
+                </div>
+            </div>
+
+            <div
+                class="p-4 bg-slate-50 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 flex justify-end">
+                <button onclick="window.print()"
+                    class="bg-primary hover:opacity-90 text-white px-6 py-2 rounded-lg font-bold flex items-center gap-2">
+                    <span class="material-symbols-outlined">print</span>
+                    Imprimir o PDF
+                </button>
+            </div>
+        </div>
+    </div>
+    <script src="./script.js"></script>
 </body>
 
 </html>
