@@ -1,4 +1,3 @@
--- Script de creación de la base de datos para el Generador de CV
 CREATE DATABASE IF NOT EXISTS cv_generator;
 USE cv_generator;
 
