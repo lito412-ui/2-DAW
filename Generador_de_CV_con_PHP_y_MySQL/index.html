@@ -10,9 +10,10 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
         rel="stylesheet" />
+    <link rel="stylesheet" href="style.css">
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script href="./script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
@@ -67,25 +68,24 @@
             </div>
             <div class="flex flex-1 justify-end gap-6 items-center">
                 <div class="h-6 w-px bg-slate-200 dark:bg-slate-800"></div>
-                <button
+                <button id="theme-toggle"
                     class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 transition-all hover:ring-2 hover:ring-primary/20">
-                    <span class="material-symbols-outlined text-[20px] dark:text-yellow-400">light_mode</span>
-                    <span class="text-xs font-bold uppercase tracking-wider">Claro</span>
-                    <div class="w-10 h-5 bg-primary rounded-full relative">
-                        <div class="absolute right-0.5 top-0.5 size-4 bg-white rounded-full shadow-sm"></div>
+                    <span id="theme-icon-light"
+                        class="material-symbols-outlined text-[20px] text-slate-400 dark:text-yellow-400">light_mode</span>
+                    <span id="theme-text-light"
+                        class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-200">Claro</span>
+                    <div class="w-10 h-5 bg-slate-300 dark:bg-primary rounded-full relative transition-colors">
+                        <div id="theme-toggle-dot"
+                            class="absolute left-0.5 top-0.5 size-4 bg-white rounded-full shadow-sm transition-all transform translate-x-0 dark:translate-x-5">
+                        </div>
                     </div>
-                    <span class="text-xs font-bold uppercase tracking-wider text-primary">Oscuro</span>
-                    <span
-                        class="material-symbols-outlined text-[20px] text-slate-400 dark:text-primary">dark_mode</span>
+                    <span id="theme-text-dark"
+                        class="text-xs font-bold uppercase tracking-wider text-primary dark:text-white">Oscuro</span>
+                    <span id="theme-icon-dark"
+                        class="material-symbols-outlined text-[20px] text-primary dark:text-slate-400">dark_mode</span>
                 </button>
                 <div class="h-6 w-px bg-slate-200 dark:bg-slate-800"></div>
-                <div class="flex gap-2">
 
-                    <button
-                        class="flex min-w-[120px] cursor-pointer items-center justify-center rounded-lg h-9 px-4 bg-primary text-white text-sm font-bold transition-all hover:opacity-90 shadow-sm">
-                        <span>Descargar PDF</span>
-                    </button>
-                </div>
                 <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-9 border border-slate-200 dark:border-slate-700"
                     data-alt="User profile avatar"
                     style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCw6kqOcZaeh8hXULJ_4yvw51II8mIILQFFFtRuE6vgecUdXNuSy55XikSmBt3eNDaD0kNBdLI_Jvxa4toycO_9SnDyz1P5-vjaNoOqhL3oYzXORxxwMXOcy4y0xW0klEh-zzA1a-zY_rnoZaU43xWdUrDmsb0jnzA6bxqGeBMLWWmHrP3WzbNBqcKWlapQiv_IfcOL1qDaoah356mKFGiXAb_Cx8OLIs1RVkzb7RqBPXDmP_bWpSMYipn_OTbE_kPYuMJaZh6BLuxx");'>
@@ -98,98 +98,105 @@
                 <div class="flex flex-col gap-2">
                     <div class="flex flex-col mb-4">
                         <div class="flex justify-between items-end mb-1">
-                            <h1 class="text-slate-900 dark:text-white text-sm font-semibold">CV Progress</h1>
-                            <span class="text-primary text-xs font-bold">0%</span>
+                            <h1 class="text-slate-900 dark:text-white text-sm font-semibold">Progreso del CV</h1>
+                            <span id="progress-text" class="text-primary text-xs font-bold">0%</span>
                         </div>
                         <div class="w-full bg-slate-100 dark:bg-slate-800 h-1.5 rounded-full">
-                            <div class="bg-primary h-1.5 rounded-full transition-all duration-500" style="width: 0%;">
+                            <div id="progress-bar" class="bg-primary h-1.5 rounded-full transition-all duration-500"
+                                style="width: 0%;">
                             </div>
                         </div>
                     </div>
                     <nav class="flex flex-col gap-1">
-                        <a class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary/10 text-primary border border-primary/20"
-                            href="#">
+                        <button id="nav-cv"
+                            class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary/10 text-primary border border-primary/20 w-full transition-colors">
                             <span class="material-symbols-outlined text-[20px]">person</span>
                             <span class="text-sm font-semibold">CV</span>
-                        </a>
-                        <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
-                            href="#">
+                        </button>
+                        <button id="nav-historial"
+                            class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors w-full">
                             <span class="material-symbols-outlined text-[20px]">work</span>
                             <span class="text-sm font-medium">Historial CV</span>
-                        </a>
+                        </button>
                     </nav>
                 </div>
             </aside>
-            <section class="flex-1 overflow-y-auto px-12 py-10 bg-slate-50 dark:bg-charcoal">
-                <div class="max-w-[720px] mx-auto">
+            <section id="main-content" class="flex-1 overflow-y-auto px-12 py-10 bg-slate-50 dark:bg-charcoal">
+                <!-- Vista Formulario CV -->
+                <div id="view-form" class="max-w-[720px] mx-auto">
                     <div class="mb-10">
                         <p class="text-slate-900 dark:text-white text-4xl font-black leading-tight tracking-tight mb-2">
                             Información Personal</p>
                         <p class="text-slate-500 dark:text-slate-400 text-base">Empieza con un contacto básico para que
                             puedan contactar contigo fácilmente</p>
                     </div>
-                    <form name="CV" action="./guardar.php" method="POST">
+                    <form id="form-cv" name="CV" action="./descargar.php" method="POST">
                         <div
                             class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 p-8 space-y-8 transition-colors">
                             <div class="grid grid-cols-2 gap-6">
                                 <label class="flex flex-col">
-                                    <span
-                                        class="text-slate-700 dark:text-slate-300 text-sm font-semibold mb-2">Nombre</span>
-                                    <input
+                                    <span class="text-slate-700 dark:text-slate-300 text-sm font-semibold mb-2">Nombre
+                                        <span class="text-red-500">*</span></span>
+                                    <input name="nombre"
                                         class="rounded-lg border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:border-primary focus:ring-1 focus:ring-primary h-12 px-4 transition-all"
                                         placeholder="Álvaro" type="text" id="in-nombre" />
                                 </label>
                                 <label class="flex flex-col">
                                     <span
-                                        class="text-slate-700 dark:text-slate-300 text-sm font-semibold mb-2">Apellidos</span>
-                                    <input
+                                        class="text-slate-700 dark:text-slate-300 text-sm font-semibold mb-2">Apellidos
+                                        <span class="text-red-500">*</span></span>
+                                    <input name="apellido"
                                         class="rounded-lg border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:border-primary focus:ring-1 focus:ring-primary h-12 px-4 transition-all"
                                         placeholder="Gutiérrez Elena" type="text" id="in-apellido" />
                                 </label>
                             </div>
+
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <label class="flex flex-col">
                                     <span class="text-slate-700 dark:text-slate-300 text-sm font-semibold mb-2">Correo
-                                        Electrónico</span>
-                                    <input
+                                        Electrónico <span class="text-red-500">*</span></span>
+                                    <input name="email"
                                         class="rounded-lg border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:border-primary focus:ring-1 focus:ring-primary h-12 px-4 transition-all"
                                         placeholder="ejemplo@gmail.com" type="email" id="in-email" />
                                 </label>
                                 <label class="flex flex-col">
-                                    <span class="text-slate-700 dark:text-slate-300 text-sm font-semibold mb-2">Numero
-                                        Teléfono</span>
-                                    <input
+                                    <span class="text-slate-700 dark:text-slate-300 text-sm font-semibold mb-2">Número
+                                        Teléfono <span class="text-red-500">*</span></span>
+                                    <input name="tel"
                                         class="rounded-lg border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:border-primary focus:ring-1 focus:ring-primary h-12 px-4 transition-all"
                                         placeholder="+34 000-000-000" type="tel" id="in-tel" />
                                 </label>
                             </div>
+
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <label class="flex flex-col">
-                                    <span class="text-slate-700 dark:text-slate-300 text-sm font-semibold mb-2">Titulo
+                                    <span class="text-slate-700 dark:text-slate-300 text-sm font-semibold mb-2">Título
                                         Profesional</span>
-                                    <input
+                                    <input name="titulo"
                                         class="rounded-lg border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:border-primary focus:ring-1 focus:ring-primary h-12 px-4 transition-all"
-                                        placeholder="Ingeniero informatico" type="text" id="in-titulo" />
+                                        placeholder="Senior BackEnd" type="text" id="in-titulo" />
                                 </label>
                                 <label class="flex flex-col">
-                                    <span
-                                        class="text-slate-700 dark:text-slate-300 text-sm font-semibold mb-2">Portafolio
-                                        linkedin</span>
-                                    <input
+                                    <span class="text-slate-700 dark:text-slate-300 text-sm font-semibold mb-2">LinkedIn
+                                        / Web</span>
+                                    <input name="linkedin"
                                         class="rounded-lg border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:border-primary focus:ring-1 focus:ring-primary h-12 px-4 transition-all"
-                                        placeholder="linkedin.com/in/username" type="text" id="in-linkedin" />
+                                        placeholder="linkedin.com/in/usuario" type="text" id="in-linkedin" />
                                 </label>
                             </div>
+
                             <label class="flex flex-col">
                                 <span
                                     class="text-slate-700 dark:text-slate-300 text-sm font-semibold mb-2">Experiencia</span>
-                                <textarea
+                                <textarea name="experiencia"
                                     class="rounded-lg border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:border-primary focus:ring-1 focus:ring-primary p-4 transition-all"
                                     placeholder="Describe tu carrera profesional..." rows="4"
                                     id="in-experiencia"></textarea>
                             </label>
                         </div>
                     </form>
+
+
                     <div class="mt-8 flex justify-between items-center">
                         <button
                             class="px-6 py-3 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 font-bold hover:bg-slate-100 dark:hover:bg-slate-800 transition-all flex items-center gap-2"
@@ -201,6 +208,23 @@
                             Guardar
                             <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
                         </button>
+                    </div>
+                </div>
+
+                <!-- Vista Historial CV -->
+                <div id="view-historial" class="max-w-[800px] mx-auto hidden">
+                    <div class="mb-10">
+                        <p class="text-slate-900 dark:text-white text-4xl font-black leading-tight tracking-tight mb-2">
+                            Historial de CVs</p>
+                        <p class="text-slate-500 dark:text-slate-400 text-base">Aquí puedes ver y recuperar tus diseños
+                            anteriores</p>
+                    </div>
+                    <div id="lista-historial" class="grid grid-cols-1 gap-4">
+                        <!-- Los CVs guardados se cargarán aquí -->
+                        <div
+                            class="bg-white dark:bg-slate-900 p-8 rounded-2xl border border-slate-200 dark:border-slate-800 text-center">
+                            <p class="text-slate-500">No tienes CVs guardados todavía.</p>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -266,10 +290,10 @@
 
             <div
                 class="p-4 bg-slate-50 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 flex justify-end">
-                <button onclick="window.print()"
+                <button id="descargar-pdf"
                     class="bg-primary hover:opacity-90 text-white px-6 py-2 rounded-lg font-bold flex items-center gap-2">
-                    <span class="material-symbols-outlined">print</span>
-                    Imprimir o PDF
+                    <span class="material-symbols-outlined">download</span>
+                    Descargar PDF
                 </button>
             </div>
         </div>
