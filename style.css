@@ -1,0 +1,63 @@
+:root {
+    --primary: #137fec;
+}
+
+body {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+@media print {
+    body>* {
+        display: none !important;
+    }
+
+    #modal-cv {
+        display: block !important;
+        position: absolute;
+        left: 0;
+        top: 0;
+        background: white;
+    }
+
+    #modal-cv .p-4,
+    #modal-cv button {
+        display: none !important;
+    }
+
+    #cv-clonado {
+        box-shadow: none !important;
+        margin: 0;
+        width: 100%;
+    }
+}
+
+.resume-preview-container {
+    aspect-ratio: 1 / 1.414;
+    overflow: hidden;
+}
+
+#cv-clonado {
+    font-family: 'Inter', sans-serif;
+    color: #0f172a;
+}
+
+#cv-clonado h1 {
+    color: #0f172a;
+}
+
+.dark ::-webkit-scrollbar {
+    width: 8px;
+}
+
+.dark ::-webkit-scrollbar-track {
+    background: #1e293b;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+    background: #334155;
+    border-radius: 4px;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+    background: #475569;
+}
