@@ -3,7 +3,7 @@ header('Content-Type: application/json');
 $host     = "localhost";
 $user     = "root";
 $password = "";
-$database = "cv_generator";
+$database = "cv_lito";
 
 $db = new mysqli($host, $user, $password, $database);
 

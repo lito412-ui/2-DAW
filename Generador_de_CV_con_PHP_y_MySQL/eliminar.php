@@ -3,7 +3,7 @@ header('Content-Type: application/json');
 $host     = "localhost";
 $user     = "root";
 $password = "";
-$database = "cv_generator";
+$database = "cv_lito";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id = intval($_POST['id']);

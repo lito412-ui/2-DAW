@@ -7,7 +7,7 @@ if (isset($_POST['Descargar'])) {
     $host     = "localhost";
     $user     = "root";
     $password = "";
-    $database = "cv_generator";
+    $database = "cv_lito";
 
     $db = new mysqli($host, $user, $password, $database);
 
@@ -18,7 +18,7 @@ if (isset($_POST['Descargar'])) {
     $nombre      = $db->real_escape_string($_POST['nombre']      ?? 'Sin_Nombre');
     $apellido    = $db->real_escape_string($_POST['apellido']    ?? '');
     $email       = $db->real_escape_string($_POST['email']       ?? '');
-    $telefono    = $db->real_escape_string($_POST['telefono']    ?? '');
+    $telefono    = $db->real_escape_string($_POST['tel']    ?? '');
     $titulo      = $db->real_escape_string($_POST['titulo']      ?? '');
     $linkedin    = $db->real_escape_string($_POST['linkedin']    ?? '');
     $experiencia = $db->real_escape_string($_POST['experiencia'] ?? '');
