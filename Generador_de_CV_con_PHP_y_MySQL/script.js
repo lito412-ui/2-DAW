@@ -10,234 +10,268 @@ document.addEventListener('DOMContentLoaded', () => {
         'in-linkedin': 'out-linkedin'
     };
 
-    const inputs = Object.keys(mapping).map(id => document.getElementById(id)).filter(el => el !== null);
+    const inputs = Object.keys(mapping);
     const progressBar = document.getElementById('progress-bar');
     const progressText = document.getElementById('progress-text');
 
-    // Función para actualizar la barra de progreso
-    function actualizarProgreso() {
-        if (!progressBar || !progressText) return;
-        
-        const totalCampos = Object.keys(mapping).length;
-        const camposCompletos = Object.keys(mapping).filter(id => {
+    /**
+     * Calcula y actualiza visualmente la barra de progreso.
+     */
+    function updateProgress() {
+        let filledFields = 0;
+        inputs.forEach(id => {
             const el = document.getElementById(id);
-            return el && el.value.trim() !== "";
-        }).length;
-        
-        const porcentaje = Math.round((camposCompletos / totalCampos) * 100);
+            if (el && el.value.trim() !== "") {
+                filledFields++;
+            }
+        });
 
-        progressBar.style.width = `${porcentaje}%`;
-        progressText.textContent = `${porcentaje}%`;
+        const percentage = Math.round((filledFields / inputs.length) * 100);
+        if (progressBar) progressBar.style.width = `${percentage}%`;
+        if (progressText) progressText.textContent = `${percentage}%`;
     }
 
-    Object.keys(mapping).forEach(inputId => {
+    /**
+     * Valida un input y aplica feedback visual (borde rojo/verde).
+     */
+    function validateInput(input) {
+        let value = input.value;
+        let isValid = true;
+
+        // 1. Bloquear números en nombre y apellidos inmediatamente
+        if (input.id === 'in-nombre' || input.id === 'in-apellido') {
+            const cleanValue = value.replace(/[0-9]/g, '');
+            if (value !== cleanValue) {
+                input.value = cleanValue;
+                value = cleanValue;
+            }
+        }
+
+        const trimmedValue = value.trim();
+
+        // 2. Definir reglas de validación
+        if (trimmedValue === "") {
+            isValid = false;
+        } else {
+            if (input.type === 'email') {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                isValid = emailRegex.test(trimmedValue);
+            } else if (input.type === 'tel') {
+                const telRegex = /^\+?[\d\s-]{9,}$/;
+                isValid = telRegex.test(trimmedValue);
+            } else if (input.id === 'in-nombre' || input.id === 'in-apellido') {
+                // Solo letras y espacios, mínimo 2 caracteres
+                const nameRegex = /^[a-zA-ZÀ-ÿ\s]{2,}$/;
+                isValid = nameRegex.test(trimmedValue);
+            } else if (input.id === 'in-linkedin') {
+                isValid = trimmedValue.length > 3;
+            } else {
+                // Para experiencia y título, basta con que no esté vacío
+                isValid = trimmedValue.length >= 2;
+            }
+        }
+
+        // 3. Aplicar estilos visuales (¡Aquí estaba el detalle!)
+        // Quitamos las clases de foco de Tailwind para que el color de validación prevalezca
+        input.classList.remove('border-red-500', 'border-green-500', 'dark:border-red-500', 'dark:border-green-500', 'ring-1', 'ring-primary');
+
+        if (isValid) {
+            input.classList.add('border-green-500', 'dark:border-green-500');
+            input.classList.remove('border-slate-200', 'dark:border-slate-700');
+        } else {
+            input.classList.add('border-red-500', 'dark:border-red-500');
+            input.classList.remove('border-slate-200', 'dark:border-slate-700');
+        }
+        
+        return isValid;
+    }
+
+    // Eventos para cada input
+    inputs.forEach(inputId => {
         const inputElement = document.getElementById(inputId);
         const outputElement = document.getElementById(mapping[inputId]);
 
-        if (inputElement && outputElement) {
+        if (inputElement) {
+            // Validar mientras escribe
             inputElement.addEventListener('input', () => {
-                outputElement.textContent = inputElement.value.trim() !== ""
-                    ? inputElement.value
-                    : "...";
-                actualizarProgreso();
+                if (outputElement) {
+                    outputElement.textContent = inputElement.value.trim() !== "" ? inputElement.value : "...";
+                }
+                validateInput(inputElement);
+                updateProgress();
             });
+
+            // Validar al entrar/salir para asegurar el estado visual
+            inputElement.addEventListener('blur', () => validateInput(inputElement));
+            inputElement.addEventListener('focus', () => validateInput(inputElement));
         }
     });
 
-    actualizarProgreso();
-
-    // Lógica para el Cambio de Tema y Sincronización de Iconos
-    const themeToggle = document.getElementById('theme-toggle');
-    const htmlElement = document.documentElement;
-
-    function updateThemeUI(isDark) {
-        const lightIcon = document.getElementById('theme-icon-light');
-        const darkIcon = document.getElementById('theme-icon-dark');
-        const lightText = document.getElementById('theme-text-light');
-        const darkText = document.getElementById('theme-text-dark');
-        const toggleDot = document.getElementById('theme-toggle-dot');
-
-        if (isDark) {
-            htmlElement.classList.add('dark');
-            if (lightIcon) lightIcon.classList.add('dark:text-yellow-400');
-            if (toggleDot) {
-                toggleDot.classList.remove('translate-x-0');
-                toggleDot.classList.add('translate-x-5');
-            }
-        } else {
-            htmlElement.classList.remove('dark');
-            if (toggleDot) {
-                toggleDot.classList.remove('translate-x-5');
-                toggleDot.classList.add('translate-x-0');
-            }
-        }
-    }
-
-    if (themeToggle) {
-        themeToggle.addEventListener('click', () => {
-            const isDark = !htmlElement.classList.contains('dark');
-            updateThemeUI(isDark);
-            localStorage.setItem('theme', isDark ? 'dark' : 'light');
-        });
-    }
-
-    const savedTheme = localStorage.getItem('theme') || 'dark';
-    updateThemeUI(savedTheme === 'dark');
-
-    // Lógica de Navegación
-    const navCV = document.getElementById('nav-cv');
-    const navHistorial = document.getElementById('nav-historial');
-    const viewForm = document.getElementById('view-form');
-    const viewHistorial = document.getElementById('view-historial');
-
-    function switchView(view) {
-        if (!viewForm || !viewHistorial) return;
-        if (view === 'cv') {
-            viewForm.classList.remove('hidden');
-            viewHistorial.classList.add('hidden');
-            if (navCV) navCV.classList.add('bg-primary/10', 'text-primary', 'border-primary/20');
-            if (navHistorial) navHistorial.classList.remove('bg-primary/10', 'text-primary', 'border-primary/20');
-        } else {
-            viewForm.classList.add('hidden');
-            viewHistorial.classList.remove('hidden');
-            if (navHistorial) navHistorial.classList.add('bg-primary/10', 'text-primary', 'border-primary/20');
-            if (navCV) navCV.classList.remove('bg-primary/10', 'text-primary', 'border-primary/20');
-            cargarHistorial();
-        }
-    }
-
-    if (navCV) navCV.addEventListener('click', () => switchView('cv'));
-    if (navHistorial) navHistorial.addEventListener('click', () => switchView('historial'));
-
-    // Lógica para Guardar
-    const btnGuardar = document.getElementById('guardar');
-    if (btnGuardar) {
-        btnGuardar.addEventListener('click', () => {
-            const formData = new FormData();
-            formData.append('accion', 'guardar_db');
-            
-            const datosLocales = {};
-            Object.keys(mapping).forEach(id => {
-                const el = document.getElementById(id);
-                const valor = el ? el.value : '';
-                formData.append(id.replace('in-', ''), valor);
-                datosLocales[id] = valor;
-            });
-
-            fetch('guardar.php', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    Swal.fire({ position: "mid", icon: "success", title: "Guardado en BBDD correctamente", showConfirmButton: false, timer: 1500 });
-                    guardarEnHistorialLocal(datosLocales); // Sincronizar local también
-                    abrirModal();
-                } else {
-                    throw new Error(data.message);
-                }
-            })
-            .catch(error => {
-                console.warn('Fallback a local:', error);
-                guardarEnHistorialLocal(datosLocales);
-                abrirModal();
-                Swal.fire({ position: "mid", icon: "success", title: "Guardado correctamente", showConfirmButton: false, timer: 1500 });
-            });
-        });
-    }
-
-    function guardarEnHistorialLocal(datos) {
-        const historial = JSON.parse(localStorage.getItem('cv_historial') || '[]');
-        historial.unshift({
-            id: Date.now(),
-            fecha: new Date().toLocaleString(),
-            nombre: datos['in-nombre'] || 'Sin nombre',
-            apellido: datos['in-apellido'] || '',
-            datos: datos
-        });
-        localStorage.setItem('cv_historial', JSON.stringify(historial.slice(0, 10)));
-    }
-
-    function cargarHistorial() {
-        const container = document.getElementById('lista-historial');
-        if (!container) return;
-        
-        fetch('guardar.php?accion=listar')
-        .then(res => res.json())
-        .then(historial => renderizarHistorial(historial, container))
-        .catch(() => {
-            const historial = JSON.parse(localStorage.getItem('cv_historial') || '[]');
-            renderizarHistorial(historial, container);
-        });
-    }
-
-    function renderizarHistorial(historial, container) {
-        if (!historial || historial.length === 0) {
-            container.innerHTML = `<div class="bg-white dark:bg-slate-900 p-8 rounded-2xl border border-slate-200 dark:border-slate-800 text-center"><p class="text-slate-500">No hay registros.</p></div>`;
-            return;
-        }
-        container.innerHTML = historial.map(item => `
-            <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 flex justify-between items-center shadow-sm hover:shadow-md transition-shadow">
-                <div>
-                    <h4 class="font-bold text-slate-900 dark:text-white">${item.nombre} ${item.apellido}</h4>
-                    <p class="text-xs text-slate-500">${item.fecha || item.fecha_creacion}</p>
-                </div>
-                <div class="flex gap-2">
-                    <button onclick="recuperarCV(${item.id})" class="p-2 bg-primary/10 text-primary rounded-lg hover:bg-primary/20 transition-colors">
-                        <span class="material-symbols-outlined text-[20px]">restore</span>
-                    </button>
-                </div>
-            </div>
-        `).join('');
-    }
-
-    window.recuperarCV = (id) => {
-        const historial = JSON.parse(localStorage.getItem('cv_historial') || '[]');
-        const item = historial.find(i => i.id == id);
-        if (item) {
-            Object.keys(item.datos).forEach(key => {
-                const input = document.getElementById(key);
-                if (input) {
-                    input.value = item.datos[key];
-                    input.dispatchEvent(new Event('input'));
-                }
-            });
-            switchView('cv');
-        }
-    };
-
-    // Modal y PDF
+    // Lógica para el Modal
     const modal = document.getElementById('modal-cv');
     const cvOriginal = document.querySelector('.resume-preview-container > div');
     const cvClonado = document.getElementById('cv-clonado');
-    const btnDescargarPDF = document.getElementById('descargar-pdf');
 
     function abrirModal() {
         if (!cvOriginal || !cvClonado) return;
         cvClonado.innerHTML = cvOriginal.innerHTML;
         cvClonado.classList.remove('text-[10px]');
-        cvClonado.classList.add('text-base'); 
-        if (modal) modal.classList.remove('hidden');
+        cvClonado.classList.add('text-base');
+        modal.classList.remove('hidden');
     }
 
-    window.cerrarModal = () => {
-        if (modal) modal.classList.add('hidden');
-    };
+    window.cerrarModal = () => modal.classList.add('hidden');
 
-    if (btnDescargarPDF) {
-        btnDescargarPDF.addEventListener('click', () => {
-            const element = document.getElementById('cv-clonado');
-            const nombre = document.getElementById('in-nombre').value || 'CV';
-            const apellido = document.getElementById('in-apellido').value || '';
-            const opt = {
-                margin: 10,
-                filename: `CV_${nombre}_${apellido}.pdf`.replace(/\s+/g, '_'),
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2, useCORS: true },
-                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-            };
-            html2pdf().set(opt).from(element).save();
+    document.querySelectorAll('button').forEach(btn => {
+        if (btn.textContent.trim().includes('Descargar PDF')) {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                abrirModal();
+            });
+        }
+    });
+
+    // --- Lógica del Historial (CRUD) ---
+    const sectionCV = document.getElementById('section-cv');
+    const sectionHistorial = document.getElementById('section-historial');
+    const listaHistorial = document.getElementById('lista-historial');
+    const navLinks = document.querySelectorAll('aside nav a');
+
+    function switchSection(target) {
+        if (target === 'historial') {
+            sectionCV.classList.add('hidden');
+            sectionHistorial.classList.remove('hidden');
+            cargarHistorial();
+        } else {
+            sectionCV.classList.remove('hidden');
+            sectionHistorial.classList.add('hidden');
+        }
+        
+        navLinks.forEach(link => {
+            if (link.textContent.includes(target === 'historial' ? 'Historial' : 'CV')) {
+                link.classList.add('bg-primary/10', 'text-primary', 'border-primary/20');
+                link.classList.remove('text-slate-500', 'dark:text-slate-400');
+            } else {
+                link.classList.remove('bg-primary/10', 'text-primary', 'border-primary/20');
+                link.classList.add('text-slate-500', 'dark:text-slate-400');
+            }
         });
     }
+
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const isHistorial = link.textContent.includes('Historial');
+            switchSection(isHistorial ? 'historial' : 'cv');
+        });
+    });
+
+    function cargarHistorial() {
+        fetch('listar.php')
+            .then(res => res.json())
+            .then(data => {
+                listaHistorial.innerHTML = '';
+                if (!Array.isArray(data) || data.length === 0) {
+                    listaHistorial.innerHTML = '<p class="text-slate-500 text-center py-10">No hay registros guardados.</p>';
+                    return;
+                }
+                data.forEach(item => {
+                    const card = document.createElement('div');
+                    card.className = 'bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 flex justify-between items-center shadow-sm';
+                    card.innerHTML = `
+                        <div>
+                            <h4 class="font-bold text-slate-900 dark:text-white">${item.nombre} ${item.apellido}</h4>
+                            <p class="text-sm text-slate-500">${item.titulo || 'Sin título'}</p>
+                            <p class="text-xs text-slate-400">${item.email}</p>
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick='modificarRegistro(${JSON.stringify(item)})' class="p-2 text-primary hover:bg-primary/10 rounded-lg transition-colors">
+                                <span class="material-symbols-outlined">edit</span>
+                            </button>
+                            <button onclick="eliminarRegistro(${item.id})" class="p-2 text-red-500 hover:bg-red-500/10 rounded-lg transition-colors">
+                                <span class="material-symbols-outlined">delete</span>
+                            </button>
+                        </div>
+                    `;
+                    listaHistorial.appendChild(card);
+                });
+            });
+    }
+
+    window.modificarRegistro = (item) => {
+        document.getElementById('in-id').value = item.id;
+        document.getElementById('in-nombre').value = item.nombre;
+        document.getElementById('in-apellido').value = item.apellido;
+        document.getElementById('in-email').value = item.email;
+        document.getElementById('in-tel').value = item.telefono;
+        document.getElementById('in-titulo').value = item.titulo;
+        document.getElementById('in-linkedin').value = item.linkedin;
+        document.getElementById('in-experiencia').value = item.experiencia;
+        
+        inputs.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) {
+                el.dispatchEvent(new Event('input'));
+                validateInput(el); // Forzar marca visual al cargar
+            }
+        });
+        switchSection('cv');
+        Swal.fire({ icon: 'info', title: 'Modo edición', text: 'Datos cargados.', timer: 1000, showConfirmButton: false });
+    };
+
+    window.eliminarRegistro = (id) => {
+        Swal.fire({
+            title: '¿Eliminar?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#137fec',
+            confirmButtonText: 'Sí, borrar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const formData = new FormData();
+                formData.append('id', id);
+                fetch('eliminar.php', { method: 'POST', body: formData })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            cargarHistorial();
+                            Swal.fire('Borrado', '', 'success');
+                        }
+                    });
+            }
+        });
+    };
+
+    const btnCV = document.getElementById('guardar');
+    if (btnCV) {
+        btnCV.addEventListener('click', (e) => {
+            e.preventDefault();
+            let allValid = true;
+            inputs.forEach(id => { 
+                if (!validateInput(document.getElementById(id))) allValid = false; 
+            });
+
+            if (allValid) {
+                const formData = new FormData(document.getElementById('form-cv'));
+                formData.append('Descargar', '1');
+                
+                fetch('guardar.php', { method: 'POST', body: formData })
+                    .then(() => {
+                        Swal.fire({ icon: 'success', title: '¡Guardado!', timer: 1500, showConfirmButton: false });
+                        document.getElementById('form-cv').reset();
+                        document.getElementById('in-id').value = '';
+                        inputs.forEach(id => {
+                            const el = document.getElementById(id);
+                            el.dispatchEvent(new Event('input'));
+                            el.classList.remove('border-green-500', 'border-red-500'); // Limpiar colores tras guardar
+                        });
+                        updateProgress();
+                    });
+            } else {
+                Swal.fire({ icon: 'error', title: 'Campos inválidos', text: 'Por favor, corrige los campos marcados en rojo.' });
+            }
+        });
+    }
+
+    updateProgress();
 });
