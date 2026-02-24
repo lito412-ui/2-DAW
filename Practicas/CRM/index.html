@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CRM - Gestión</title>
+    <meta name="description" content="CRM - Gestión de Eventos y Productos">
+    <link rel="stylesheet" href="./style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=account_circle,add,apartment,box,chevron_left,chevron_right,circle_circle,close,database,delete,edit,globe,help,home,list_alt,lists,menu,receipt,search,specific_gravity" />
+</head>
+
+<body>
+    <header class="main-header">
+        <nav class="main-header-nav">
+            <ul class="main-header-ul">
+                <li class="main-header-li"><button class="btn" type="button" data-bs-toggle="offcanvas"
+                        data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">
+                        <span class="material-symbols-outlined"> menu </span>
+                    </button></li>
+                <li><a class="main-header-id">CAE</a><input type="text" value="ES00303030QV4" class="main-header-input">
+                </li>
+                <li><button class="main-header-button"><span class="material-symbols-outlined">
+                            help
+                        </span></button>
+                </li>
+                <li>
+                    <button class="main-header-button"><span class="material-symbols-outlined icon">
+                            account_circle
+                        </span></button>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <aside class="sidebar">
+        <nav>
+            <ul class="sidebar-ul">
+                <li>
+                    <a class="menu-link" data-seccion="inicio">
+                        <span class="material-symbols-outlined">
+                            home
+                        </span>
+                        Inicio
+                    </a>
+                </li>
+                <li><a class="menu-link" data-seccion="depositos">
+                        <span class="material-symbols-outlined">
+                            specific_gravity
+                        </span>
+                        Depósitos
+                    </a>
+                </li>
+                <li>
+                    <a class="menu-link" data-seccion="bodega">
+                        <span class="material-symbols-outlined">
+                            database
+                        </span>
+                        Bodega
+                    </a>
+                </li>
+                <li>
+                    <a class="menu-link" data-seccion="productos">
+                        <span class="material-symbols-outlined">
+                            box
+                        </span>
+                        Productos
+                    </a>
+                </li>
+                <li>
+                    <a class="menu-link" data-seccion="proceso">
+                        <span class="material-symbols-outlined">
+                            globe
+                        </span>
+                        Proceso
+                    </a>
+                </li>
+                <li>
+                    <a class="menu-link" data-seccion="entradas">
+                        <span class="material-symbols-outlined">
+                            circle_circle
+                        </span>
+                        Entradas
+                    </a>
+                </li>
+                <li>
+                    <a class="menu-link" data-seccion="pedidos">
+                        <span class="material-symbols-outlined">
+                            list_alt
+                        </span>
+                        Pedidos
+                    </a>
+                </li>
+                <li>
+                    <a class="menu-link" data-seccion="salidas">
+                        <span class="material-symbols-outlined">
+                            list_alt
+                        </span>
+                        Salidas
+                    </a>
+                </li>
+                <li>
+                    <a class="menu-link" data-seccion="procesos">
+                        <span class="material-symbols-outlined">
+                            lists
+                        </span>
+                        Procesos
+                    </a>
+                </li>
+                <li>
+                    <a class="menu-link" data-seccion="facturas">
+                        <span class="material-symbols-outlined">
+                            receipt
+                        </span>
+                        Facturas
+                    </a>
+                </li>
+                <li>
+                    <a class="menu-link" data-seccion="silicie">
+                        <span class="material-symbols-outlined">
+                            apartment
+                        </span>
+                        Silicie
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+    <main>
+        <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
+            id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+            <div class="offcanvas-body">
+                <div class="offcanvas-inicio">
+                    <button class="btn-offcanvas" type="button" data-bs-toggle="offcanvas"
+                        data-bs-target="#offcanvasScrolling">
+                        <span class="material-symbols-outlined">
+                            home
+                        </span>Inicio</button>
+                </div>
+                <p style="font-weight: bold; margin-top: 20px;">Menú</p>
+                <ul class="offcanvas-menu">
+                    <li><a class="menu-link offcanvas-link" data-seccion="inicio" data-bs-toggle="offcanvas"
+                            data-bs-target="#offcanvasScrolling">Inicio</a></li>
+                    <li><a class="menu-link offcanvas-link" data-seccion="depositos" data-bs-toggle="offcanvas"
+                            data-bs-target="#offcanvasScrolling">Depósitos</a></li>
+                    <li><a class="menu-link offcanvas-link" data-seccion="bodega" data-bs-toggle="offcanvas"
+                            data-bs-target="#offcanvasScrolling">Bodega</a></li>
+                    <li><a class="menu-link offcanvas-link" data-seccion="productos" data-bs-toggle="offcanvas"
+                            data-bs-target="#offcanvasScrolling">Productos</a></li>
+                    <li><a class="menu-link offcanvas-link" data-seccion="proceso" data-bs-toggle="offcanvas"
+                            data-bs-target="#offcanvasScrolling">Proceso</a></li>
+                    <li><a class="menu-link offcanvas-link" data-seccion="entradas" data-bs-toggle="offcanvas"
+                            data-bs-target="#offcanvasScrolling">Entradas</a></li>
+                    <li><a class="menu-link offcanvas-link" data-seccion="pedidos" data-bs-toggle="offcanvas"
+                            data-bs-target="#offcanvasScrolling">Pedidos</a></li>
+                    <li><a class="menu-link offcanvas-link" data-seccion="salidas" data-bs-toggle="offcanvas"
+                            data-bs-target="#offcanvasScrolling">Salidas</a></li>
+                    <li><a class="menu-link offcanvas-link" data-seccion="procesos" data-bs-toggle="offcanvas"
+                            data-bs-target="#offcanvasScrolling">Procesos</a></li>
+                    <li><a class="menu-link offcanvas-link" data-seccion="facturas" data-bs-toggle="offcanvas"
+                            data-bs-target="#offcanvasScrolling">Facturas</a></li>
+                    <li><a class="menu-link offcanvas-link" data-seccion="silicie" data-bs-toggle="offcanvas"
+                            data-bs-target="#offcanvasScrolling">Silicie</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- SECCIÓN INICIO - CALENDARIO -->
+        <section id="seccion-inicio" class="seccion activa">
+            <div class="container-fluid">
+                <div class="row justify-content-center">
+                    <div class="col-md-8 col-lg-6">
+                        <div class="calendar-card">
+                            <div class="calendar-header">
+                                <div class="d-flex align-items-center">
+                                    <button id="prevMonth" class="btn-nav">
+                                        <span class="material-symbols-outlined">chevron_left</span>
+                                    </button>
+                                    <h2 id="monthDisplay" class="month-title">Mes Año</h2>
+                                    <button id="nextMonth" class="btn-nav">
+                                        <span class="material-symbols-outlined">chevron_right</span>
+                                    </button>
+                                </div>
+                                <button class="btn-add-event" data-bs-toggle="modal" data-bs-target="#eventModal">
+                                    <span class="material-symbols-outlined">add</span>
+                                    Añadir Evento
+                                </button>
+                            </div>
+
+                            <div class="calendar-body">
+                                <div class="calendar-weekdays">
+                                    <div>Lun</div>
+                                    <div>Mar</div>
+                                    <div>Mié</div>
+                                    <div>Jue</div>
+                                    <div>Vie</div>
+                                    <div>Sáb</div>
+                                    <div>Dom</div>
+                                </div>
+                                <div id="calendarDays" class="calendar-days">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="events-container mt-4">
+                            <h3 class="events-title">Eventos Registrados</h3>
+                            <div id="eventsList" class="events-list">
+                                <p class="no-events">No hay eventos para mostrar</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN PRODUCTOS -->
+        <section id="seccion-productos" class="seccion">
+            <div class="container-fluid">
+                <h1 class="seccion-titulo">Gestión de Productos</h1>
+
+                <!-- Filtros -->
+                <div class="filtros-container">
+                    <div class="filtros-fila-1">
+                        <div class="filtro-grupo">
+                            <input type="text" class="filtro-input" id="filtroDescripcion" placeholder="Descripción">
+                        </div>
+                        <div class="filtro-grupo">
+                            <input type="text" class="filtro-input" id="filtroCosecha" placeholder="Cosecha">
+                        </div>
+                        <div class="filtro-grupo">
+                            <input type="text" class="filtro-input" id="filtroCodigoArticulo"
+                                placeholder="Código Artículo">
+                        </div>
+                        <div class="filtro-grupo">
+                            <button class="btn-buscar" id="btnBuscar" title="Buscar productos">
+                                <span class="material-symbols-outlined">search</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="filtros-fila-2">
+                        <div class="filtro-grupo">
+                            <select class="filtro-select" id="filtroTipoProceso">
+                                <option value="">Tipo de Proceso</option>
+                                <option value="fermentacion">Fermentación</option>
+                                <option value="envejecimiento">Envejecimiento</option>
+                                <option value="embotellado">Embotellado</option>
+                            </select>
+                        </div>
+                        <div class="filtro-grupo">
+                            <select class="filtro-select" id="filtroFamilia">
+                                <option value="">Familia</option>
+                                <option value="vino-tinto">Vino Tinto</option>
+                                <option value="vino-blanco">Vino Blanco</option>
+                                <option value="vino-rosado">Vino Rosado</option>
+                            </select>
+                        </div>
+                        <div class="filtro-grupo">
+                            <select class="filtro-select" id="filtroSubfamilia">
+                                <option value="">Subfamilia</option>
+                                <option value="reserva">Reserva</option>
+                                <option value="crianza">Crianza</option>
+                                <option value="joven">Joven</option>
+                            </select>
+                        </div>
+                        <div class="filtro-grupo">
+                            <input type="text" class="filtro-input" id="filtroLote" placeholder="Lote">
+                        </div>
+                        <div class="filtro-grupo">
+                            <select class="filtro-select" id="filtroVenta">
+                                <option value="">En Venta</option>
+                                <option value="si">Sí</option>
+                                <option value="no">No</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tabla de Productos -->
+                <div class="productos-tabla-container">
+                    <div class="tabla-header">
+                        <h3>Productos</h3>
+                        <button class="btn-add-producto" data-bs-toggle="modal" data-bs-target="#productoModal">
+                            <span class="material-symbols-outlined">add</span>
+                        </button>
+                    </div>
+                    <table class="tabla-productos">
+                        <thead>
+                            <tr>
+                                <th>Producto</th>
+                                <th>Código</th>
+                                <th>Familia</th>
+                                <th>Tipo de Proceso</th>
+                                <th>Cosecha</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaProductosBody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal Formulario Eventos -->
+    <div class="modal fade" id="eventModal" tabindex="-1" aria-labelledby="eventModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="eventModalLabel">Crear Nuevo Evento</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="eventForm">
+                        <div class="mb-3">
+                            <label for="eventTitle" class="form-label">Título del Evento</label>
+                            <input type="text" class="form-control" id="eventTitle" required
+                                placeholder="Ej: Reunión de equipo">
+                        </div>
+                        <div class="mb-3">
+                            <label for="eventDate" class="form-label">Fecha</label>
+                            <input type="date" class="form-control" id="eventDate" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="eventDesc" class="form-label">Descripción</label>
+                            <textarea class="form-control" id="eventDesc" rows="3"
+                                placeholder="Detalles del evento..."></textarea>
+                        </div>
+                        <div class="text-end">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-primary"
+                                style="background-color: orange; border-color: orange;">Guardar Evento</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Formulario Productos -->
+    <div class="modal fade" id="productoModal" tabindex="-1" aria-labelledby="productoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="productoModalLabel">Crear Nuevo Producto</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="productoForm">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="prodNombre" class="form-label">Nombre del Producto</label>
+                                <input type="text" class="form-control" id="prodNombre"
+                                    placeholder="Ej: Vino Tinto Reserva">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="prodCodigo" class="form-label">Código de Artículo</label>
+                                <input type="text" class="form-control" id="prodCodigo" placeholder="Ej: VT-001">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="prodFamilia" class="form-label">Familia</label>
+                                <select class="form-control" id="prodFamilia">
+                                    <option value="">Seleccionar</option>
+                                    <option value="vino-tinto">Vino Tinto</option>
+                                    <option value="vino-blanco">Vino Blanco</option>
+                                    <option value="vino-rosado">Vino Rosado</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="prodSubfamilia" class="form-label">Subfamilia</label>
+                                <select class="form-control" id="prodSubfamilia">
+                                    <option value="">Seleccionar</option>
+                                    <option value="reserva">Reserva</option>
+                                    <option value="crianza">Crianza</option>
+                                    <option value="joven">Joven</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="prodTipoProceso" class="form-label">Tipo de Proceso</label>
+                                <select class="form-control" id="prodTipoProceso">
+                                    <option value="">Seleccionar</option>
+                                    <option value="fermentacion">Fermentación</option>
+                                    <option value="envejecimiento">Envejecimiento</option>
+                                    <option value="embotellado">Embotellado</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="prodCosecha" class="form-label">Cosecha</label>
+                                <input type="text" class="form-control" id="prodCosecha" placeholder="Ej: 2020">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="prodLote" class="form-label">Lote</label>
+                                <input type="text" class="form-control" id="prodLote" placeholder="Ej: LOTE-001">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="prodVenta" class="form-label">En Venta</label>
+                                <select class="form-control" id="prodVenta">
+                                    <option value="si">Sí</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="prodDescripcion" class="form-label">Descripción</label>
+                            <textarea class="form-control" id="prodDescripcion" rows="3"
+                                placeholder="Detalles del producto..."></textarea>
+                        </div>
+                        <div class="text-end">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-primary"
+                                style="background-color: orange; border-color: orange;">Guardar Producto</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Ficha Técnica del Producto -->
+    <div class="modal fade" id="fichaProductoModal" tabindex="-1" aria-labelledby="fichaProductoLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="fichaProductoLabel">Ficha Técnica del Producto</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="fichaProductoBody">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./script.js" defer></script>
+</body>
+
+</html>
